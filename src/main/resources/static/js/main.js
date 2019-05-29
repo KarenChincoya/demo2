@@ -1,3 +1,5 @@
+Vue.prototype.$materia = '-';
+
 var app = new Vue({
     el: '#app',
     data: {
@@ -8,9 +10,27 @@ var app = new Vue({
         datos: true,
         materias: [],
         opcion: 'menu',
-        materia: 'lae'
-    },
+        materia: this.$materia
+	},
+	mounted: function(){
+		
+		console.log('Iniciando my-app');
+		
+		axios.get('/materia/todas')
+		.then(function(response) {
+			this.app.materias = response.data;
+			console.log(response.data);
+		});
+	},
     methods: {
+		setMateria: function(nombre){
+			console.log("Funcion setMateria");
+			console.log(nombre);
+			console.log("-----");
+			this.$materia = nombre;
+			//location.reload();
+		}
+		,
     	fn_materia: function(){
   		  alert('hola');
   	  },
@@ -114,50 +134,20 @@ Vue.component('my-materias', {
 Vue.component('my-laes', {
 	template: `
 		<div>
-		
-		<div class="box">
-			<label for="preg">Pregunta</label> <input type="text" name="preg"
-				size="85" v-model="current_preg" @keyup.enter="fn_add"> <input
-				type="button" value="+" @click="fn_add">
-		</div>
-		
-		<ul v-if="pregs.length>0">
-			<li v-for="(preg,index) in pregs">{{preg.desc}}
-				<button @click="fn_remove_question(index)">x</button> <br> <respuesta-component
-					v-bind:index="index" v-bind:preg="preg"></respuesta-component>
-			</li>
-		</ul>
+		Hola a desde {{ m }}
 		
 		</div>
 	`,
-	props: ['materias'],
+	props: ['m'],
 	mounted: function(){
 		
-		console.log('Iniciando componente my-laes');
-		
-		axios.get('/materia/todas')
-		.then(function(response) {
-			this.app.materias = response.data;
-			console.log(response.data);
-		});
+		console.log('Iniciando componente para examenes');
+		console.log(this.app.m);
+		this.app.m = this.$materia;	
+		console.log(this.$materia);	
 	},
 	methods: {
-		fn_enviar: function(){
-			var fd = new FormData();
-			fd.append("nombre", document.forms['cat_form'].nombre.value);
-			console.log(document.forms['cat_form'].nombre.value);
-			
-			axios({
-				method: 'post',
-				url: '/materia/nueva',
-				responseType: 'json',
-				data: fd
-			})
-			.then(function(response){
-				this.app.materias = response.data;
-				console.log(response);
-			});
-		}
+
 	}
 		
 });

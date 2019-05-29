@@ -1,55 +1,61 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset='utf-8'>
-<meta http-equiv='X-UA-Compatible' content='IE=edge'>
-<title>Calificaciones test</title>
-<meta name='viewport' content='width=device-width, initial-scale=1'>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<style>
-.box {
-	margin-top: 16px;
-	border: 1px solid darkblue;
-	padding: 8px;
-	width: 700px;
-}
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Calificaciones test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.2/axios.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+      .box {
+        margin-top: 16px;
+        border: 1px solid darkblue;
+        padding: 8px;
+        width: 700px;
+      }
 
-.resp_block {
-	padding-top: 8px
-}
-</style>
+      .resp_block {
+        padding-top: 8px;
+      }
+    </style>
 
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<script src="js/vue.js"></script>
-<script src="js/axios.min.js"></script>
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <script src="js/vue.js"></script>
+    <script src="js/axios.min.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="alert alert-primary" role="alert">
+        <button
+          type="button"
+          class="btn btn-link"
+          v-if="opcion!='menu'"
+          @click="opcion='menu'"
+        >
+          Back
+        </button>
+        Sistema la salle PREGUNTAS DE EXAMENES - Lista de materias
+      </div>
 
-	<div id="app">
+    
+	  <ul id="example-1">
+		<li v-for="m in materias" class="list-group-item" 
+		v-on:click="setMateria(m.nombre)"
+		>
+		  {{ m.nombre }}
+		</li>
+	  </ul>
 
-		<div class="alert alert-primary" role="alert">
-			<button type="button" class="btn btn-link" v-if="opcion!='menu'"
-				@click="opcion='menu'">Back</button>
-			Sistema la salle PREGUNTAS DE EXAMENES - Lista de materias
-		</div>
+      <my-laes
+        v-bind:laes="laes"
+        v-if="materia!='-'"
+      ></my-laes>
 
-
-		<ul class="list-group" v-if="opcion=='menu'">
-			<!-- materia -->
-			<li class="list-group-item active" @click="opcion='materia'">Materias</li>
-			<!--  lae -->
-			<li class="list-group-item" @click="opcion='lae'">LAE</li>
-			<li class="list-group-item" @click="opcion='web'">WEB</li>
-		</ul>
-
-		<my-materias v-bind:materias="materias"
-			v-if="opcion=='materia'"></my-materias>
-
-		<my-laes v-bind:laes="laes"
-			v-bind:materias="materias" v-if="opcion=='lae'"></my-laes>
-
-<!-- 
+      <!-- 
 		<button @click="fn_ver">Enviar al servidor</button>
 		
 		
@@ -67,19 +73,22 @@
 		</ul>
 		
 		-->
-		
-	</div>
-	<pre>* Esto no tiene validaciones sobre textos u obligatoriedad de respuestas, pero es la base.</pre>
+    </div>
+    <pre>
+* Esto no tiene validaciones sobre textos u obligatoriedad de respuestas, pero es la base.</pre
+    >
 
 	<script src="js/main.js"></script>
+	
+  </body>
 
-</body>
-
-<script type="text/javascript">
-	function fn_clean_prepare(inStr) {
-		return inStr.replace('¬', ' ').replace('·', '.').replace("\n", '')
-				.trim();
-	}
-</script>
-
+  <script type="text/javascript">
+    function fn_clean_prepare(inStr) {
+      return inStr
+        .replace("¬", " ")
+        .replace("·", ".")
+        .replace("\n", "")
+        .trim();
+    }
+  </script>
 </html>
