@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<meta http-equiv="Cache-control" content="public">
+<meta http-equiv="Cache-control" content="private">
+<meta http-equiv="Cache-control" content="no-cache">
+<meta http-equiv="Cache-control" content="no-store">
+
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="js/vue.js"></script>
+<script src="js/axios.min.js"></script>
+</head>
+
+<body>
+
+	<div id="app">
+
+		<div class="alert alert-primary" role="alert">
+			<button type="button" class="btn btn-link" v-if="opcion!='menu'" @click="opcion='menu'">Back</button>
+			Sistema la salle
+		</div>
+
+		<ul class="list-group" v-if="opcion=='menu'">
+			<li class="list-group-item active" @click="opcion='categoria'">Categoria</li>
+			<li class="list-group-item" @click="opcion='producto'">Productos</li>
+			<li class="list-group-item">Terminales</li>
+			<li class="list-group-item">Abrir/cerrar cajas</li>
+			<li class="list-group-item">Ventas</li>
+		</ul>
+
+		<my-categories v-bind:categorias="categorias"
+			v-if="opcion=='categoria'"></my-categories>
+
+		<my-products v-bind:productos="productos" 
+			v-bind:categorias="categorias" 
+			v-if="opcion=='producto'"></my-products>
+
+	</div>
+
+	<script src="js/main.js"></script>
+
+</body>
+</html>
